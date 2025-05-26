@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Formulario Feria</title>
+	</head>
+	<body>
+	<h1 th:text="${feria.id} != null ? 'Editar Feria' : 'Crear Feria'"></h1>
+	
+	<form th:action="@{/organizador/ferias/guardar}" th:object="${feria}" method="post">
+	    <input type="hidden" th:field="*{id}" />
+	
+	    <label>Nombre:</label>
+	    <input type="text" th:field="*{nombre}" required /><br>
+	
+	    <label>Descripción:</label>
+	    <input type="text" th:field="*{descripcion}" required /><br>
+	
+	    <label>Ubicación:</label>
+	    <input type="text" th:field="*{ubicacion}" required /><br>
+	
+	    <label>Fecha de Inicio:</label>
+	    <input type="date" th:field="*{fechaInicio}" required /><br>
+	
+	    <label>Fecha de Fin:</label>
+	    <input type="date" th:field="*{fechaFin}" required /><br>
+	
+	    <button type="submit">Guardar</button>
+	</form>
+	<div style="text-align: center; margin-top: 20px;">
+		<a th:href="@{/organizador/ferias}">Volver</a>
+	</div>
+	</body>
+</html>

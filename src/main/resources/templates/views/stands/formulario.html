@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuevo Stand</title>
+</head>
+<body>
+<h1>Crear Stand</h1>
+<form th:action="@{/stands/guardar}" th:object="${stand}" method="post">
+    <label>Número:</label>
+    <input type="text" th:field="*{numero}" required /><br/>
+
+    <label>Ubicación:</label>
+    <input type="text" th:field="*{ubicacion}" required /><br/>
+
+    <label>Límite de Productos:</label>
+    <input type="number" th:field="*{limiteProductos}" required /><br/>
+
+    <label>Disponible:</label>
+    <input type="checkbox" th:field="*{disponible}" /><br/>
+
+    <button type="submit">Guardar</button>
+</form>
+
+<a th:href="@{/stands}">← Volver</a>
+</body>
+</html>

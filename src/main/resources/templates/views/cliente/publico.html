@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vista Pública - FeriaApp</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-image: linear-gradient(315deg, #ff5f6d 0%, #ffc371 74%);
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 50px;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .card p {
+            margin: 5px 0;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        .btn button{
+					padding: 15px 30px;
+				    font-size: 1.1em;
+				    color: white;
+				    background: linear-gradient(315deg, rgb(210, 11, 136) 0%, rgb(64, 0, 128) 74%);
+				    border: none;
+				    border-radius: 10px;
+				    cursor: pointer;
+				    transition: transform 0.2s, box-shadow 0.2s;
+				    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+					margin-top: 2%;
+					margin-bottom: 2%;
+				}
+
+        footer {
+            margin-top: 60px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🎉 Bienvenido a FeriaApp</h1>
+    <p>Consulta ferias y productos disponibles sin necesidad de iniciar sesión.</p>
+</header>
+
+<div class="container">
+
+    <!-- Ferias Próximas -->
+    <h2>📅 Ferias Próximas</h2>
+    <div th:if="${#lists.isEmpty(ferias)}">
+        <p>No hay ferias programadas.</p>
+    </div>
+    <div th:unless="${#lists.isEmpty(ferias)}" class="cards-container">
+        <div class="card" th:each="feria : ${ferias}">
+            <h3 th:text="${feria.nombre}">Nombre de Feria</h3>
+            <p th:text="'📅 ' + ${feria.fechaInicio}" th:if="${feria.fechaInicio != null}">Fecha inicio</p>
+            <p th:text="'📍 ' + ${feria.ubicacion}" th:if="${feria.ubicacion != null}">Ubicación</p>
+            <p th:text="${feria.descripcion}" th:if="${feria.descripcion != null}">Descripción</p>
+        </div>
+    </div>
+
+    <!-- Productos Destacados -->
+    <h2 style="margin-top: 60px;">🛍️ Productos Disponibles</h2>
+    <div th:if="${#lists.isEmpty(productos)}">
+        <p>No hay productos disponibles.</p>
+    </div>
+    <div th:unless="${#lists.isEmpty(productos)}" class="cards-container">
+        <div class="card" th:each="producto : ${productos}">
+            <h3 th:text="${producto.nombre}">Nombre del Producto</h3>
+            <p th:text="'$' + ${producto.precio}">Precio</p>
+            <p th:text="'📦 Stock: ' + ${producto.stock}">Stock</p>
+            <p th:text="'🧩 Categoría: ' + ${producto.categoria}">Categoría</p>
+        </div>
+    </div>
+
+    <div style="margin-top: 40px;">
+        <a th:href="@{/}" class="btn btn-secondary"><button>← Volver al Inicio</button></a>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2025 FeriaApp - Todos los derechos reservados</p>
+</footer>
+
+</body>
+</html>

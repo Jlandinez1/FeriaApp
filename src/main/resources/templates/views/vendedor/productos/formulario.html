@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Producto</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    color: #333;
+    text-align: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+form {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    border: 1px solid #ddd;
+}
+
+label {
+    align-self: start;
+    font-weight: bold;
+    margin-bottom: -10px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="file"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #6a11cb;
+    box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+button {
+    padding: 12px 24px;
+    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    filter: brightness(0.95);
+    transform: scale(1.02);
+}
+
+a.btn-volver {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(315deg, #ef476f 0%, #ff9a8d 74%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+a.btn-volver:hover {
+    background: linear-gradient(315deg, #d9305c 0%, #f57a7a 74%);
+    transform: scale(1.02);
+}
+
+.btn button{
+			padding: 15px 30px;
+		    font-size: 1.1em;
+		    color: white;
+			background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+		    border: none;
+		    border-radius: 10px;
+		    cursor: pointer;
+		    transition: transform 0.2s, box-shadow 0.2s;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+			margin-bottom: 2%;
+		}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 10px;
+    }
+
+    form {
+        padding: 20px;
+    }
+}
+</style>
+
+<body>
+<h2 th:text="${producto.id != null} ? 'Editar Producto' : 'Nuevo Producto'"></h2>
+<form th:action="@{/vendedor/productos/guardar}" th:object="${producto}" method="post" enctype="multipart/form-data">
+
+    <input type="hidden" name="id" value="${producto.id}">
+
+    <label>Nombre:</label>
+    <input type="text" th:field="*{nombre}" required /><br>
+
+    <label>Precio:</label>
+    <input type="number" th:field="*{precio}" step="0.01" required /><br>
+
+    <label>Descripción:</label>
+    <textarea th:field="*{descripcion}" required></textarea><br>
+
+    <label>Stock:</label>
+    <input type="number" th:field="*{stock}" required /><br>
+
+    <label>Categoría:</label>
+    <input type="text" th:field="*{categoria}"><br>
+
+    <!-- Campo para subir imagen -->
+    <label>Imagen del producto:</label>
+    <input type="file" name="imagen" accept="image/*"><br><br>
+
+    <button type="submit">Guardar</button>
+</form>
+<div style="text-align: center; margin-top: 5px;">
+    <a class="btn" th:href="@{/vendedor/productos}"><button>volver</button></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Stands</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-create {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #27ae60;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .btn-create:hover {
+            background-color: #219150;
+        }
+
+        .actions a {
+            margin-right: 10px;
+        }
+
+        .actions a.edit {
+            color: #f39c12;
+        }
+
+        .actions a.delete {
+            color: #e74c3c;
+        }
+		
+		.btn button{
+			padding: 15px 30px;
+		    font-size: 1.1em;
+		    color: white;
+		    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+		    border: none;
+		    border-radius: 10px;
+		    cursor: pointer;
+		    transition: transform 0.2s, box-shadow 0.2s;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+			margin-bottom: 2%;
+		}
+
+        .btn-secondary button{
+	    padding: 15px 30px;
+	    font-size: 1.1em;
+	    color: white;
+	    background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+	    border: none;
+	    border-radius: 10px;
+	    cursor: pointer;
+	    transition: transform 0.2s, box-shadow 0.2s;
+	    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+	
+<body>
+<h1>Stands Registrados</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Ubicación</th>
+            <th>Disponible</th>
+            <th>Límite Productos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="stand : ${stands}">
+            <td th:text="${stand.numero}">Número</td>
+            <td th:text="${stand.ubicacion}">Ubicación</td>
+            <td th:text="${stand.disponible ? 'Sí' : 'No'}">Disponible</td>
+            <td th:text="${stand.limiteProductos}">Límite</td>
+			<td>
+			    <a th:href="@{/stands/editar/{id}(id=${stand.id})}" class="btn btn-warning">Editar</a> |
+			    <a th:href="@{/stands/eliminar/{id}(id=${stand.id})}" class="btn btn-danger"
+			       onclick="return confirm('¿Estás seguro de que deseas eliminar este stand?');">
+			       Eliminar
+			    </a>
+			</td>
+        </tr>
+    </tbody>
+</table>
+<div style="text-align: center; margin-top: 20px;">
+    <a th:href="@{/stands/nuevo}" class="btn-secondary"><button>Crear Nuevo Stand</button></a>
+	<a href="/organizador/dashboard" class="btn"><button>Volver</button></a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>

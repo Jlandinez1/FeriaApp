@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Comentarios y Reseñas - FeriaApp</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        color: #333;
+        text-align: center;
+    }
+
+    header {
+        background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+        color: white;
+        padding: 60px 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 0 20px;
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        margin-top: -40px;
+        z-index: 1;
+        position: relative;
+    }
+
+    h2 {
+        margin-top: 30px;
+        color: #2c3e50;
+    }
+
+    form.comment-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 50px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1em;
+    }
+
+    .stars {
+        display: inline-block;
+        font-size: 24px;
+        color: gold;
+    }
+
+    .star-option {
+        display: none;
+    }
+
+    .star-label {
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .star-label:hover,
+    .star-label:hover ~ .star-label {
+        color: orange;
+    }
+
+    .btn-submit {
+        padding: 12px 24px;
+        background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        filter: brightness(0.95);
+        transform: scale(1.02);
+    }
+
+    .comment-list {
+        margin-top: 40px;
+        border-top: 1px solid #ddd;
+    }
+
+    .comment-item {
+        border: 1px solid #eee;
+        border-left: 5px solid #6a11cb;
+        padding: 20px;
+        margin-top: 20px;
+        text-align: left;
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+
+    .comment-item:hover {
+        transform: translateX(-5px);
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .rating {
+        font-size: 18px;
+        color: gold;
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: linear-gradient(315deg, #ef476f 0%, #ff9a8d 74%);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: linear-gradient(315deg, #d9305c 0%, #f57a7a 74%);
+        transform: scale(1.02);
+    }
+</style>
+
+<body>
+
+<header>
+    <h1>💬 Comentarios y Reseñas</h1>
+    <p>Deja tu opinión sobre la última feria o productos que viste</p>
+</header>
+
+<div class="container">
+
+    <!-- Formulario de comentarios -->
+    <form class="comment-form" th:action="@{/comentarios/guardar}" th:object="${comentario}" method="post">
+        <label for="nombre">Tu nombre:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required />
+
+        <label for="correo">Tu correo electrónico:</label>
+        <input type="email" id="correo" name="correo" placeholder="juan@example.com" required />
+
+        <label for="mensaje">Tu comentario:</label>
+        <textarea id="mensaje" name="mensaje" rows="5" placeholder="¿Qué te pareció la experiencia? ¿Qué mejorarías?" required></textarea>
+
+        <label for="estrellas">Califica (1 a 5):</label>
+        <select id="estrellas" name="calificacion" required>
+            <option value="">Selecciona una calificación</option>
+            <option value="1">⭐ 1 Estrella</option>
+            <option value="2">⭐⭐ 2 Estrellas</option>
+            <option value="3">⭐⭐⭐ 3 Estrellas</option>
+            <option value="4">⭐⭐⭐⭐ 4 Estrellas</option>
+            <option value="5">⭐⭐⭐⭐⭐ 5 Estrellas</option>
+        </select>
+
+        <button type="submit" class="btn-submit">Enviar Comentario</button>
+    </form>
+
+    <!-- Lista de comentarios anteriores -->
+    <div class="comment-list">
+        <h2>📋 Comentarios Recientes</h2>
+
+        <div th:if="${#lists.isEmpty(comentarios)}">
+            <p>No hay comentarios aún.</p>
+        </div>
+
+        <div th:unless="${#lists.isEmpty(comentarios)}">
+            <div class="comment-item" th:each="c : ${comentarios}">
+                <div class="comment-header">
+                    <strong th:text="${c.nombre} + ' (' + ${c.correo} + ')'">Nombre del usuario</strong>
+                    <span class="rating" th:text="${c.calificacion == 1 ? '⭐' : 
+                                                c.calificacion == 2 ? '⭐⭐' :
+                                                c.calificacion == 3 ? '⭐⭐⭐' :
+                                                c.calificacion == 4 ? '⭐⭐⭐⭐' :
+                                                c.calificacion == 5 ? '⭐⭐⭐⭐⭐' : ''}">
+                        ⭐⭐⭐⭐⭐
+                    </span>
+                </div>
+                <p th:text="${c.mensaje}">Este es un ejemplo de comentario.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón volver -->
+    <a href="/" class="btn-back">← Volver al Inicio</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!--No lo estoy usando-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reservar Productos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-color: #ff5f6d;
+            background-image: linear-gradient(315deg, #ff5f6d 0%, #ffc371 74%);
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .container {
+            margin: 40px auto;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .alert-success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .alert-error {
+            color: red;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #6a11cb;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .btn-reservar {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .btn-reservar:hover {
+            background: linear-gradient(315deg, #5a0bb5 0%, #1f63e6 74%);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            filter: brightness(0.95);
+        }
+		
+		.btn button{
+					padding: 15px 30px;
+				    font-size: 1.1em;
+				    color: white;
+				    background: linear-gradient(315deg, rgb(210, 11, 136) 0%, rgb(64, 0, 128) 74%);
+				    border: none;
+				    border-radius: 10px;
+				    cursor: pointer;
+				    transition: transform 0.2s, box-shadow 0.2s;
+				    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+					margin-top: 2%;
+					margin-bottom: 2%;
+				}
+    </style>
+
+<body>
+<h2>🛍️ Productos Disponibles para Reservar</h2>
+
+<div th:if="${param.exito}">
+    <p style="color: green;">✅ Reserva realizada exitosamente.</p>
+</div>
+
+<div th:if="${param.error}">
+    <p style="color: red;">❌ No se pudo realizar la reserva. Verifica el stock.</p>
+</div>
+
+<div class="container">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="producto : ${productos}">
+                <td th:text="${producto.nombre}"></td>
+                <td th:text="'$' + ${producto.precio}"></td>
+                <td th:text="${producto.stock}"></td>
+                <td th:text="${producto.categoria}"></td>
+                <td>
+                    <a th:href="@{/cliente/reservas/nueva/{productoId}(productoId=${producto.id})}">Reservar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<a class="btn" href="/cliente/dashboard"><button>Volver al Dashboard</button></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>

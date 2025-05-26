@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mis Productos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<style>
+	body {
+	    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	    margin: 40px;
+	    background-color: #f9f9f9;
+	    color: #333;
+	}
+
+	h2 {
+	    color: #2c3e50;
+	    margin-bottom: 20px;
+	}
+
+	button {
+	    background-color: #3498db;
+	    color: white;
+	    border: none;
+	    padding: 10px 16px;
+	    font-size: 14px;
+	    border-radius: 6px;
+	    cursor: pointer;
+	    transition: background-color 0.3s;
+	    margin-bottom: 15px;
+	}
+
+	button:hover {
+	    background-color: #2980b9;
+	}
+
+	table {
+	    width: 100%;
+	    border-collapse: collapse;
+	    background-color: white;
+	    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+	}
+
+	th, td {
+	    text-align: left;
+	    padding: 12px 15px;
+	    border-bottom: 1px solid #ddd;
+	    vertical-align: middle;
+	}
+
+	th {
+	    background-color: #f2f2f2;
+	    color: #333;
+	}
+
+	img {
+	    object-fit: cover;
+	    border-radius: 4px;
+	    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+	}
+
+	a {
+	    color: #3498db;
+	    text-decoration: none;
+	    font-weight: bold;
+	}
+
+	a:hover {
+	    text-decoration: underline;
+	    color: #21618c;
+	}
+
+	.btn button{
+			padding: 15px 30px;
+		    font-size: 1.1em;
+		    color: white;
+		    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+		    border: none;
+		    border-radius: 10px;
+		    cursor: pointer;
+		    transition: transform 0.2s, box-shadow 0.2s;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+		}
+
+		.btn button{
+					padding: 15px 30px;
+				    font-size: 1.1em;
+				    color: white;
+				    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+				    border: none;
+				    border-radius: 10px;
+				    cursor: pointer;
+				    transition: transform 0.2s, box-shadow 0.2s;
+				    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+					margin-top: 2%;
+					margin-bottom: 2%;
+		}
+
+		.btn-secondary button{
+			padding: 15px 30px;
+			font-size: 1.1em;
+			color: white;
+			background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: transform 0.2s, box-shadow 0.2s;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+			margin-bottom: 2%;
+		}
+</style>
+
+<body>
+<h2>📦 Mis Productos</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="producto : ${productos}">
+            <td>
+                <img th:src="@{${producto.imagenUrl}}" alt="Imagen del producto" width="80" />
+            </td>
+            <td th:text="${producto.nombre}">Nombre</td>
+            <td th:text="'$' + ${producto.precio}">Precio</td>
+            <td th:text="${producto.descripcion}">Descripción</td>
+            <td th:text="${producto.stock}">Stock</td>
+            <td th:text="${producto.categoria}">Categoría</td>
+            <td class="actions">
+                <a th:href="@{/vendedor/productos/editar/{id}(id=${producto.id})}">Editar</a> |
+                <a th:href="@{'/vendedor/productos/eliminar/' + ${producto.id}}"
+                   onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/vendedor/productos/nuevo}" class="btn"><button>Nuevo Producto</button></a>
+
+<a href="/vendedor/dashboard" class="btn-secondary"><button>Volver al Dashboard</button></a>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mensajes Enviados</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h2 class="section-title">📤 Mensajes Enviados</h2>
+
+<div class="container">
+
+    <div th:if="${#lists.isEmpty(mensajes)}">
+        <p class="no-mensajes">Aún no has enviado ningún mensaje.</p>
+    </div>
+
+    <div th:each="m : ${mensajes}" class="mensaje-item">
+        <div class="mensaje-header">
+            <strong th:text="'Para: ' + ${m.receptorId}">Destinatario</strong>
+            <span class="fecha" th:text="#{temporals.format(m.fecha, 'dd/MM/yyyy HH:mm')}"></span>
+        </div>
+        <p th:text="${m.contenido}">Contenido</p>
+    </div>
+
+</div>
+
+<a href="/mensajes/recibidos" class="btn-back">← Volver a la bandeja</a>
+
+</body>
+</html>

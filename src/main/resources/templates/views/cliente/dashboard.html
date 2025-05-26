@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard Cliente</title>
+    <meta charset="UTF-8">
+</head>
+
+<style>
+	body {
+	    margin: 0;
+	    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+	    color: #333;
+	    text-align: center;
+	}
+
+	header {
+	    background-color: #ff5f6d;
+	    background-image: linear-gradient(315deg, #ff5f6d 0%, #ffc371 74%);
+	    color: white;
+	    padding: 60px 20px;
+		margin-bottom: 6%;
+	}
+
+	h1 {
+	    font-size: 2em;
+	    color: #2c3e50;
+	    margin-bottom: 40px;
+	}
+
+	.dashboard-buttons {
+	    display: flex;
+	    justify-content: center;
+	    gap: 20px;
+	    flex-wrap: wrap;
+	}
+
+	.dashboard-buttons a {
+	    text-decoration: none;
+	}
+
+	.dashboard-buttons button {
+	    padding: 15px 30px;
+	    font-size: 1.1em;
+	    color: white;
+	    background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+	    border: none;
+	    border-radius: 10px;
+	    cursor: pointer;
+	    transition: transform 0.2s, box-shadow 0.2s;
+	    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	.dashboard-buttons button:hover {
+	    transform: scale(1.05);
+	    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	}
+
+	.btn button{
+			padding: 15px 30px;
+		    font-size: 1.1em;
+		    color: white;
+		    background: linear-gradient(315deg, rgb(210, 11, 136) 0%, rgb(64, 0, 128) 74%);
+		    border: none;
+		    border-radius: 10px;
+		    cursor: pointer;
+		    transition: transform 0.2s, box-shadow 0.2s;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+			margin-bottom: 2%;
+		}
+		
+	.event-list{
+		margin-bottom: 2%;
+	}
+</style>
+
+<body>
+	<header>
+		<h1>🧍‍♂️Bienvenido, Cliente</h1>
+		<p>Aquí puedes explorar productos, reservar espacios o ver eventos de ferias.</p>
+	</header>
+    
+
+	<div class="dashboard-buttons">
+		<a th:href="@{productos}"><button>Explorar productos</button></a>
+        <a href="/cliente/reservas"><button>Mis reservas</button></a>
+	</div>
+
+	<!-- Sección de próximos eventos -->
+	    <section class="event-list">
+	        <h2>🌟 Próximos Eventos</h2>
+
+	        <div th:if="${#lists.isEmpty(ferias)}">
+	            <p>No hay próximos eventos programados.</p>
+	        </div>
+
+	        <div th:unless="${#lists.isEmpty(ferias)}">
+	            <table border="1" style="margin: 0 auto; border-collapse: collapse;">
+	                <thead>
+	                    <tr style="background-color: #6a11cb; color: white;">
+	                        <th style="padding: 12px;">Nombre</th>
+	                        <th style="padding: 12px;">Ubicación</th>
+	                        <th style="padding: 12px;">Fecha Inicio</th>
+	                        <th style="padding: 12px;">Fecha Fin</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr th:each="feria : ${ferias}" 
+	                        style="border-bottom: 1px solid #ddd; text-align: center;">
+	                        <td th:text="${feria.nombre}" style="padding: 10px;"></td>
+	                        <td th:text="${feria.ubicacion}" style="padding: 10px;"></td>
+	                        <td th:text="${#temporals.format(feria.fechaInicio, 'dd/MM/yyyy')}" style="padding: 10px;"></td>
+	                        <td th:text="${#temporals.format(feria.fechaFin, 'dd/MM/yyyy')}" style="padding: 10px;"></td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </div>
+	    </section>
+			<a href="/" class="btn" onclick="return confirm('¿Desea Cerrar Sesion?')"><button>Cerrar sesion</button></a>
+
+</body>
+</html>

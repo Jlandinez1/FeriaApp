@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mis Notificaciones</title>
+</head>
+
+<style>
+    /* Reset básico */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(315deg, #ff5f6d 0%, #ffc371 74%);
+        color: white;
+        padding: 40px 20px;
+        width: 100%;
+        max-width: 1000px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+        max-width: 800px;
+        width: 100%;
+        margin-top: 20px;
+        background-color: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #2c3e50;
+    }
+
+    .alert {
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    .alert-info {
+        background-color: #d9edf7;
+        color: #31708f;
+        border: 1px solid #bce8f1;
+    }
+
+    .notification-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .notification-item {
+        background-color: #f9f9f9;
+        border-left: 5px solid #6a11cb;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        text-align: left;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .notification-item:hover {
+        transform: translateX(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .notification-item strong {
+        display: block;
+        font-size: 1.2em;
+        color: #2575fc;
+    }
+
+    .notification-item .description {
+        display: block;
+        margin-top: 5px;
+        color: #666;
+        font-style: italic;
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 24px;
+        background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        filter: brightness(0.95);
+        transform: scale(1.02);
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            padding: 20px 15px;
+        }
+
+        .btn-back {
+            font-size: 1em;
+            padding: 10px 20px;
+        }
+    }
+
+    .btn button{
+	    padding: 15px 30px;
+	    font-size: 1.1em;
+	    color: white;
+	    background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+	    border: none;
+	    border-radius: 10px;
+	    cursor: pointer;
+	    transition: transform 0.2s, box-shadow 0.2s;
+	    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+    .event-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        max-width: 300px;
+        height: 150px;
+        text-align: left;
+        align-content: center;
+        transition: transform 0.3s;
+    }
+
+    .event-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .event-card h3 {
+        margin-top: 0;
+        color: #2575fc;
+    }
+</style>
+
+<body>
+
+    <div class="event-card">
+        <h2>🔔 Tus Notificaciones</h2>
+
+        <div th:if="${#lists.isEmpty(productos)}">
+            <p>No tienes productos pendientes.</p>
+        </div>
+
+        <div th:unless="${#lists.isEmpty(productos)}">
+            <ul>
+                <li th:each="producto : ${productos}">
+                    <span th:text="${producto.nombre}"></span> - 
+                    <span th:text="${producto.descripcion}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br><br>
+
+<a href="/organizador/dashboard" class="btn"><button>← Volver</button></a>
+
+</body>
+</html>

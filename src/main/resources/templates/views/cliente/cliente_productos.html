@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Productos Disponibles</title>
+    <meta charset="UTF-8">
+</head>
+
+<style>
+	body {
+	        margin: 0;
+	        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+	        color: #333;
+	        text-align: center;
+	    }
+		
+		header {
+		       background-color: #ff5f6d;
+		       background-image: linear-gradient(315deg, #ff5f6d 0%, #ffc371 74%);
+		       color: white;
+		       padding: 40px 20px;
+			   margin-bottom: 5%;
+		   }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .productos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .producto-card {
+			margin-top: 2%;
+            border: 1px solid #ddd;
+            padding: 15px;
+            width: 250px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .producto-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .producto-card h3 {
+            font-size: 18px;
+            margin: 0 0 5px;
+            color: #222;
+        }
+
+        .producto-card p {
+            margin: 4px 0;
+            font-size: 14px;
+            color: #555;
+        }
+		
+		.btn button{
+					padding: 15px 30px;
+				    font-size: 1.1em;
+				    color: white;
+				    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+				    border: none;
+				    border-radius: 10px;
+				    cursor: pointer;
+				    transition: transform 0.2s, box-shadow 0.2s;
+				    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+					margin-top: 2%;
+					margin-bottom: 2%;
+		}
+
+		.btn-secondary button{
+			padding: 15px 30px;
+			font-size: 1.1em;
+			color: white;
+			background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: transform 0.2s, box-shadow 0.2s;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+			margin-bottom: 2%;
+		}
+    </style>
+
+<body>
+	<header>
+    	<h2>🛒 Productos de Vendedores</h2>
+	</header>
+
+	    <form method="get" th:action="@{/cliente/productos}">
+	        <input type="text" name="keyword" placeholder="Buscar productos..." th:value="${param.keyword}">
+	        
+	        <select name="categoria">
+				<option value="">Todas las categorías</option>
+				<option th:each="cat : ${categorias}"
+						th:value="${cat}"
+						th:text="${cat}"
+						th:selected="${cat == param.categoria}">
+				</option>
+			</select>
+
+	        <select name="orden">
+	            <option value="">Ordenar por</option>
+	            <option value="popularidad" th:selected="${param.orden == 'popularidad'}">Popularidad</option>
+	            <option value="precio_asc" th:selected="${param.orden == 'precio_asc'}">Precio: Menor a mayor</option>
+	            <option value="precio_desc" th:selected="${param.orden == 'precio_desc'}">Precio: Mayor a menor</option>
+	        </select>
+
+	        <button type="submit">Filtrar</button>
+	    </form>
+
+	    <div class="productos-grid">
+			<div th:each="producto : ${productos}" class="producto-card">
+				<img th:src="@{${producto.imagenUrl}}" alt="imagen" th:onerror="'/img/default.jpg'" />
+				<h3 th:text="${producto.nombre}">Nombre</h3>
+				<p th:text="'Precio: $' + ${producto.precio}"></p>
+				<p th:text="'Stock: ' + ${producto.stock}"></p>
+				<p th:text="'Categoría: ' + ${producto.categoria}"></p>
+				<p th:text="'Vendedor: ' + ${producto.vendedorNombre}"></p>
+				 <td>
+                <a th:href="@{'/cliente/reservas/nueva/' + ${producto.id}}" class="btn-secondary"><button>Reservar</button></a>
+            </td>
+			</div>
+		</div>
+	<a href="dashboard" class="btn"><button>Volver al menu cliente</button></a>
+	
+</body>
+</html>

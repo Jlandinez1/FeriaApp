@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FeriaApp - Inicio</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <header>
+        <h1>🎉 Bienvenido a FeriaApp 🎉</h1>
+        <p>Explora eventos únicos y conéctate con tu comunidad</p>
+        <nav class="navegacion">
+            <a th:href="@{/contacto}" class="btn-contacto">📩 Contáctanos</a>
+            <a th:href="@{/terminos}" class="btn-contacto">📜 Politicas y Terminos</a>
+            <a th:href="@{/comentarios}" class="btn-contacto">📩 Deja un comentario</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="user-selection">
+            <h2>Ingresa como:</h2>
+            <div class="buttons">
+                <a th:href="@{/cliente/login}" class="btn">Cliente</a>
+                <a th:href="@{/vendedor/login}" class="btn">Vendedor</a>
+                <a th:href="@{/organizador/login}" class="btn">Organizador</a>
+            </div>
+        </section>
+
+        <!-- Ferias Próximas -->
+        <section class="event-list">
+            <h2>📅 Próximos Eventos</h2>
+
+            <div th:if="${#lists.isEmpty(ferias)}">
+                <p>No hay ferias programadas.</p>
+            </div>
+
+            <div th:unless="${#lists.isEmpty(ferias)}" class="events">
+                <div class="event-card" th:each="feria : ${ferias}">
+                    <h3 th:text="${feria.nombre}">Feria Artesanal</h3>
+                    <p th:text="'Del ' + ${#temporals.format(feria.fechaInicio, 'dd/MM/yyyy')} + ' al ' + ${#temporals.format(feria.fechaFin, 'dd/MM/yyyy')} + ' - ' + ${feria.ubicacion}">Del 15 al 17 de mayo - Parque Central</p>
+                </div>
+            </div>
+        </section>
+
+        <center>
+            <!-- Vendedores Destacados -->
+            <section class="vendor-list">
+                <h2>🧑‍💼 Vendedores que participan</h2>
+
+                <div th:if="${#lists.isEmpty(vendedores)}">
+                    <p>No hay vendedores registrados aún.</p>
+                </div>
+
+                <div th:unless="${#lists.isEmpty(vendedores)}" class="vendors">
+                    <div class="event-card" th:each="vendedor : ${vendedores}">
+                        <h3 th:text="${vendedor.nombre + ' ' + vendedor.apellidos}">Nombre del Vendedor</h3>
+                        <p th:text="'Correo: ' + ${vendedor.correo}">Correo: juan@example.com</p>
+                    </div>
+                </div>
+            </section>
+        </center>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 FeriaApp - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>

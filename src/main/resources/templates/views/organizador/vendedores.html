@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestión de Vendedores</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn.aprobar {
+            background-color: #28a745;
+        }
+
+        .btn.rechazar {
+            background-color: #dc3545;
+        }
+		
+		.btn button{
+				padding: 15px 30px;
+			    font-size: 1.1em;
+			    color: white;
+			    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+			    border: none;
+			    border-radius: 10px;
+			    cursor: pointer;
+			    transition: transform 0.2s, box-shadow 0.2s;
+			    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+				margin-top: 2%;
+		}
+    </style>
+</head>
+<body>
+    <h1>📋 Vendedores Registrados</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Emprendimiento</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vendedor : ${vendedores}">
+                <td th:text="${vendedor.nombre + ' ' + vendedor.apellidos}"></td>
+                <td th:text="${vendedor.correo}"></td>
+                <td th:text="${vendedor.nombreEmprendimiento}"></td>
+                <td th:text="${vendedor.categoriaEmprendimiento}"></td>
+                <td th:text="${vendedor.estado}"></td>
+                <td>
+                    <a th:href="@{'/organizador/vendedores/aprobar/' + ${vendedor.id}}" class="btn aprobar"
+                       th:if="${vendedor.estado == 'pendiente'}">Aprobar</a>
+                    <a th:href="@{'/organizador/vendedores/rechazar/' + ${vendedor.id}}" class="btn rechazar"
+                       th:if="${vendedor.estado == 'pendiente'}">Rechazar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+	<a href="dashboard" class="btn btn-secondary"><button>Volver al menu organizador</button></a>
+</body>
+</html>
