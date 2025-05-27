@@ -1,5 +1,5 @@
 # Etapa de construcción con Maven
-FROM maven:3.8.6-jdk-21 AS build
+FROM maven:4.0.0-jdk-21 AS build
 WORKDIR /workspace
 COPY . .
 RUN mvn clean package -DskipTests
