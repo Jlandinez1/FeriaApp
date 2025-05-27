@@ -1,5 +1,5 @@
-# Etapa de construcción con Maven
-FROM maven:3.8.6-jdk-21 AS build
+# Etapa de construcción con Maven + Java 21
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /workspace
 COPY . .
 RUN mvn clean package -DskipTests
