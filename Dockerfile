@@ -1,10 +1,11 @@
-# Usa una imagen con Java 21 - Puedes usar Eclipse Temurin
+# Etapa de construcción con Maven
 FROM eclipse-temurin:21-jdk-slim as build
-
+WORKDIR /workspace
 COPY . .
-RUN mvn clean package -DskipTest
+RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:21-jdk-slim as build
-COPY --from=build /target/*.jar demo.jar
-EXPOSE 8087
-ENTRYPOINT ["java", "-jar", "demo.jar"]
+# Etapa final – Ejecutar la app
+FROM eclipse-temurin:21-jre-slim
+WORKDIR /app
+COPY --from=build target/feriaApp.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
