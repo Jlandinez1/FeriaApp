@@ -61,6 +61,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>feriaApp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
