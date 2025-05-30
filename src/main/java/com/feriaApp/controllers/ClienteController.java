@@ -169,7 +169,7 @@ public class ClienteController {
             List<Reserva> reservas = reservaRepositorio.findByClienteId(clienteId);
 
             model.addAttribute("reservas", reservas);
-            return "views/cliente/reservar_productos";
+            return "views/cliente/reservas/lista";
         }
 
     // Cancelar una reserva
