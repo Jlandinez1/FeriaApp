@@ -137,7 +137,7 @@ a.btn-volver:hover {
 <h2 th:text="${producto.id != null} ? 'Editar Producto' : 'Nuevo Producto'"></h2>
 <form th:action="@{/vendedor/productos/guardar}" th:object="${producto}" method="post" enctype="multipart/form-data">
 
-    <input type="hidden" name="id" value="${producto.id}">
+    <input type="hidden" name="id" th:value="${producto.id}"/>
 
     <label>Nombre:</label>
     <input type="text" th:field="*{nombre}" required /><br>

@@ -59,17 +59,7 @@ public String mostrarDashboard(HttpSession session, Model model) {
 
     Vendedor vendedor = vendedorRepositorio.findById(vendedorId).orElse(null);
     session.setAttribute("vendedorId", vendedor.getId());
-    if (vendedor == null) {
-        return "redirect:/vendedor/login";
-    }
-
     model.addAttribute("vendedor", vendedor);
-    
-    System.out.println("Vendedor ID en sesión: " + vendedorId);  // Depuración
-    if (vendedorId == null) {
-        return "redirect:/vendedor/login";
-    }
-    
     return "views/vendedor/dashboard";
 }
 
