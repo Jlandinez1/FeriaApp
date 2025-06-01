@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>📊 Reporte de Reservas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        color: #333;
+        text-align: center;
+    }
+
+    header {
+        background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+        color: white;
+        padding: 60px 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 0 20px;
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        margin-top: -40px;
+        position: relative;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #6a11cb;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .btn-back:hover {
+        filter: brightness(0.95);
+    }
+</style>
+
+<body>
+
+<header>
+    <h1>📦 Reporte de Reservas</h1>
+    <p>Verifica las reservas realizadas a tus productos.</p>
+</header>
+
+<div class="container">
+
+    <div th:if="${#lists.isEmpty(reporte)}">
+        <p>No hay reservas aún.</p>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(reporte)}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cliente</th>
+                    <th>Total Reservado</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${reporte}">
+                    <td th:text="${item.productoNombre}">Nombre del Producto</td>
+                    <td th:text="${item.clienteNombre}">Nombre del Cliente</td>
+                    <td th:text="${item.totalReservas}">5</td>
+                    <td th:text="${item.cantidadTotal}">10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/vendedor/dashboard" class="btn-back">← Volver al menu Vendedor</a>
+</div>
+
+</body>
+</html>

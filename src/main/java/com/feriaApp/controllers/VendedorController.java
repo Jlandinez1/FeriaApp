@@ -1,9 +1,24 @@
 package com.feriaApp.controllers;
 
+import com.feriaApp.models.Cliente;
+import com.feriaApp.models.Producto;
+import com.feriaApp.models.Reserva;
+import com.feriaApp.models.ReservaReporteDTO;
 import com.feriaApp.models.Vendedor;
 import com.feriaApp.repository.VendedorRepositorio;
+import com.feriaApp.models.Cliente;
+import com.feriaApp.models.Reserva;
+import com.feriaApp.models.Producto;
+import com.feriaApp.repository.ClienteRepositorio;
+import com.feriaApp.repository.ProductoRepositorio;
+import com.feriaApp.repository.ReservaRepositorio;
+
 
 import jakarta.servlet.http.HttpSession;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +31,12 @@ public class VendedorController {
 
     @Autowired
     private VendedorRepositorio vendedorRepositorio;
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
+    @Autowired
+    private ReservaRepositorio reservaRepositorio;
+    @Autowired
+    private ProductoRepositorio productoRepositorio;
 
     @GetMapping("/registro")
     public String mostrarFormularioRegistro(Model model) {
@@ -61,6 +82,45 @@ public String mostrarDashboard(HttpSession session, Model model) {
     session.setAttribute("vendedorId", vendedor.getId());
     model.addAttribute("vendedor", vendedor);
     return "views/vendedor/dashboard";
+}
+
+@GetMapping("/reservas/reporte")
+public String verReporteReservas(HttpSession session, Model model){
+String vendedorId = (String) session.getAttribute("vendedorId");
+    if (vendedorId == null) return "redirect:/vendedor/login";
+
+    List<Producto> productos = productoRepositorio.findByVendedorId(vendedorId);
+
+    List<ReservaReporteDTO> reporte = new ArrayList<>();
+
+    for (Producto p : productos) {
+        List<Reserva> reservas = reservaRepositorio.findByProductoId(p.getId());
+
+        if (!reservas.isEmpty()) {
+            long totalReservas = reservas.size();
+            int cantidadTotal = reservas.stream().mapToInt(Reserva::getCantidad).sum();
+            LocalDate ultimaReserva = reservas.stream()
+                    .map(Reserva::getFechaReserva)
+                    .max(LocalDate::compareTo)
+                    .orElse(null);
+
+            for (Reserva r : reservas) {
+                Cliente cliente = clienteRepositorio.findById(r.getClienteId()).orElse(null);
+                reporte.add(new ReservaReporteDTO(
+                        p.getNombre(),
+                        cliente != null ? cliente.getNombre() : "Desconocido",
+                        cantidadTotal,
+                        ultimaReserva,
+                        totalReservas
+                ));
+            }
+        } else {
+            reporte.add(new ReservaReporteDTO(p.getNombre(), "Ninguno", 0, null, 0));
+        }
+    }
+
+    model.addAttribute("reporte", reporte);
+    return "views/vendedor/reservas/reporte_reservas";
 }
 
 }
