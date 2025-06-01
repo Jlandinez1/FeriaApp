@@ -3,6 +3,131 @@
 	<head>
 	    <title>Formulario Feria</title>
 	</head>
+
+	<style>
+		body {
+			margin: 0;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+			color: #333;
+			text-align: center;
+		}
+
+		.container {
+			max-width: 600px;
+			margin: auto;
+			padding: 40px 20px;
+		}
+
+		h2 {
+			margin-bottom: 30px;
+			color: #2c3e50;
+			font-size: 2em;
+			font-weight: bold;
+		}
+
+		form {
+			background-color: white;
+			border-radius: 12px;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+			padding: 30px;
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			align-items: center;
+			width: 100%;
+			max-width: 500px;
+			margin: auto;
+			border: 1px solid #ddd;
+		}
+
+		label {
+			align-self: start;
+			font-weight: bold;
+			margin-bottom: -10px;
+		}
+
+		input[type="text"],
+		input[type="number"],
+		input[type="file"],
+		textarea {
+			width: 100%;
+			padding: 10px 15px;
+			border: 1px solid #ccc;
+			border-radius: 6px;
+			font-size: 1em;
+			box-sizing: border-box;
+		}
+
+		input[type="text"]:focus,
+		input[type="number"]:focus,
+		input[type="file"]:focus,
+		textarea:focus {
+			outline: none;
+			border-color: #6a11cb;
+			box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+		}
+
+		textarea {
+			resize: vertical;
+			min-height: 100px;
+		}
+
+		a.btn-volver {
+			display: inline-block;
+			margin-top: 20px;
+			padding: 10px 20px;
+			background: linear-gradient(315deg, #ef476f 0%, #ff9a8d 74%);
+			color: white;
+			text-decoration: none;
+			border-radius: 8px;
+			font-size: 1em;
+			transition: all 0.3s ease;
+		}
+
+		a.btn-volver:hover {
+			background: linear-gradient(315deg, #d9305c 0%, #f57a7a 74%);
+			transform: scale(1.02);
+		}
+
+		.btn button{
+			padding: 15px 30px;
+		    font-size: 1.1em;
+		    color: white;
+		    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+		    border: none;
+		    border-radius: 10px;
+		    cursor: pointer;
+		    transition: transform 0.2s, box-shadow 0.2s;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+			margin-bottom: 2%;
+		}
+
+        .btn-secondary button{
+	    padding: 15px 30px;
+	    font-size: 1.1em;
+	    color: white;
+	    background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+	    border: none;
+	    border-radius: 10px;
+	    cursor: pointer;
+	    transition: transform 0.2s, box-shadow 0.2s;
+	    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+		/* Responsive */
+		@media (max-width: 600px) {
+			.container {
+				padding: 20px 10px;
+			}
+
+			form {
+				padding: 20px;
+			}
+		}
+		</style>
+
 	<body>
 	<h1 th:text="${feria.id} != null ? 'Editar Feria' : 'Crear Feria'"></h1>
 	
@@ -24,10 +149,10 @@
 	    <label>Fecha de Fin:</label>
 	    <input type="date" th:field="*{fechaFin}" required /><br>
 	
-	    <button type="submit">Guardar</button>
+	    <a class="btn-secondary"><button type="submit">Guardar</button></a>
 	</form>
 	<div style="text-align: center; margin-top: 20px;">
-		<a th:href="@{/organizador/ferias}">Volver</a>
+		<a th:href="@{/organizador/ferias}" class="btn"><button>Volver</button></a>
 	</div>
 	</body>
 </html>
