@@ -9,6 +9,7 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/target/feriaApp.jar app.jar
+COPY --from=build /app/target/classes/static img
 
 # Exponer el puerto de tu aplicación (ajusta si usas otro)
 EXPOSE 8087
