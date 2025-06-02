@@ -117,7 +117,7 @@
 <table border="1">
     <thead>
         <tr>
-			<th>Imagen</th>
+			<!--<th>Imagen</th>-->
             <th>Nombre</th>
             <th>Precio</th>
             <th>Descripción</th>
@@ -128,9 +128,10 @@
     </thead>
     <tbody>
         <tr th:each="producto : ${productos}">
-			<td>
-                <img th:src="@{${producto.imagenUrl}}" alt="Imagen del producto" width="80" />
-            </td>
+			<!--<td>
+                <img th:src="@{${producto.imagenUrl}}" alt="Imagen del producto" width="80">
+
+            </td>-->
             <td th:text="${producto.nombre}">Nombre</td>
             <td th:text="'$' + ${producto.precio}">Precio</td>
             <td th:text="${producto.descripcion}">Descripción</td>
