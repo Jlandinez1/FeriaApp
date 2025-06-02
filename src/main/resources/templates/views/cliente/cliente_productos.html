@@ -129,7 +129,7 @@
 
 	    <div class="productos-grid">
 			<div th:each="producto : ${productos}" class="producto-card">
-				<!--<img th:src="@{${producto.imagenUrl}}" width="50" />-->
+				<img th:src="@{${producto.imagenUrl}}" width="50" />
 				<h3 th:text="${producto.nombre}">Nombre</h3>
 				<p th:text="'Precio: $' + ${producto.precio}"></p>
 				<p th:text="'Stock: ' + ${producto.stock}"></p>
