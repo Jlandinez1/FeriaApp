@@ -10,6 +10,9 @@ FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/target/feriaApp.jar app.jar
 
+#Copiar Recursos estaticos
+COPY --from=build /workspace/src/main/resources/static /app/static
+
 # Exponer el puerto de tu aplicación (ajusta si usas otro)
 EXPOSE 8087
 
