@@ -29,10 +29,10 @@
 	}
 
 	.dashboard-buttons {
-	    display: flex;
+	    display: grid;
+		grid-template-columns: repeat(3, 1fr);
 	    justify-content: center;
 	    gap: 20px;
-	    flex-wrap: wrap;
 	}
 
 	.dashboard-buttons a {
@@ -85,6 +85,7 @@
 		<a href="/organizador/vendedores"><button>Aprobar Vendedores</button></a>
 		<a href="/stands/asignarStand"><button>Asignar Stands</button></a>
 		<a href="/organizador/notificaciones"><button>Ver Notificaciones</button></a>
+		<a href="/organizador/reportes/asistencias"><button>Ver Reporte de Asistencias</button></a>
 	</div>
 	<a href="/" class="btn" onclick="return confirm('¿Desea Cerrar Sesion?')"><button>Cerrar sesion</button></a>
    

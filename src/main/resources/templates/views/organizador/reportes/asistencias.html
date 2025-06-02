@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reporte de Asistencias</title>
+    <meta charset="UTF-8">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f9fc;
+        padding: 20px;
+    }
+    h2 {
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #6a11cb;
+        color: white;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    a.button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #2575fc;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+    a.button:hover {
+        background-color: #1c5fac;
+    }
+</style>
+<body>
+
+<h2>📊 Reporte de Asistencias a Ferias</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Feria</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Ubicación</th>
+            <th>Total Asistentes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="fila : ${reporte}">
+            <td th:text="${fila.nombre}"></td>
+            <td th:text="${#temporals.format(fila.fechaInicio, 'dd/MM/yyyy')}"></td>
+            <td th:text="${#temporals.format(fila.fechaFin, 'dd/MM/yyyy')}"></td>
+            <td th:text="${fila.ubicacion}"></td>
+            <td th:text="${fila.totalAsistentes}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<br><br>
+<a href="/organizador/dashboard" class="button">Volver al Dashboard</a>
+
+</body>
+</html>

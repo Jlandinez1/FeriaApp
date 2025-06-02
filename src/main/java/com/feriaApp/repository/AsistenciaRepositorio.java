@@ -11,4 +11,6 @@ public interface AsistenciaRepositorio extends MongoRepository<Asistencia, Strin
 
     // Si quieres por feria y cliente, para saber si un cliente confirmó asistencia
     Optional<Asistencia> findByFeriaIdAndClienteIdAndConfirmada(String feriaId, String clienteId, boolean confirmada);
+
+    List<Asistencia> findByFeriaIdAndConfirmada(String feriaId, boolean confirmada);
 }

@@ -2,6 +2,8 @@ package com.feriaApp.controllers;
 
 import com.feriaApp.models.Organizador;
 import com.feriaApp.repository.OrganizadorRepositorio;
+import com.feriaApp.Services.ReporteService;
+import com.feriaApp.models.FeriaConAsistentesDTO;
 import com.feriaApp.models.Notificacion;
 import com.feriaApp.repository.NotificacionRepositorio;
 
@@ -79,5 +81,15 @@ public class OrganizadorController {
 
         return "views/organizador/notificaciones";
     }
+    
+        @Autowired
+        private ReporteService reporteService;
+    
+        @GetMapping("/reportes/asistencias")
+        public String verReporteAsistencias(Model model) {
+            List<FeriaConAsistentesDTO> reporte = reporteService.getReporteAsistencias();
+            model.addAttribute("reporte", reporte);
+            return "views/organizador/reportes/asistencias";
+        }
 
 }
