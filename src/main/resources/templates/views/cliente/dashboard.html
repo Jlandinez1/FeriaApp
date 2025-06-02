@@ -69,6 +69,21 @@
 			margin-top: 2%;
 			margin-bottom: 2%;
 		}
+
+	.btn-secondary button{
+		padding: 15px 30px;
+		font-size: 1.1em;
+		color: white;
+		background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+		border: none;
+		border-radius: 10px;
+		cursor: pointer;
+		transition: transform 0.2s, box-shadow 0.2s;
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+		margin-top: 2%;
+		margin-bottom: 2%;
+
+	}
 		
 	.event-list{
 		margin-bottom: 2%;
@@ -112,6 +127,16 @@
 	                        <td th:text="${feria.ubicacion}" style="padding: 10px;"></td>
 	                        <td th:text="${#temporals.format(feria.fechaInicio, 'dd/MM/yyyy')}" style="padding: 10px;"></td>
 	                        <td th:text="${#temporals.format(feria.fechaFin, 'dd/MM/yyyy')}" style="padding: 10px;"></td>
+							<td>
+								<span th:if="${!feriaService.estaAsistenciaConfirmada(feria.id, clienteId)}"></span>
+									<a th:href="@{/cliente/confirmar-asistencia/{id}(id=${feria.id})}" 
+									onclick="return confirm('Asistencia Confirmada')"
+									class="btn-secondary"><button>Confirmar Asistencia</button></a>
+								</span>
+								<span th:if="${feriaService.estaAsistenciaConfirmada(feria.id, clienteId)}">
+									<p>Asistencia Confirmada</p>
+								</span>
+							</td>
 	                    </tr>
 	                </tbody>
 	            </table>

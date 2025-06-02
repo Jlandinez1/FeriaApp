@@ -1,6 +1,8 @@
 package com.feriaApp.controllers;
 
+import com.feriaApp.models.Asistencia;
 import com.feriaApp.models.Cliente;
+import com.feriaApp.repository.AsistenciaRepositorio;
 import com.feriaApp.repository.ClienteRepositorio;
 import com.feriaApp.models.Producto;
 import com.feriaApp.repository.ProductoRepositorio;
@@ -11,6 +13,7 @@ import com.feriaApp.models.Vendedor;
 import com.feriaApp.repository.VendedorRepositorio;
 import com.feriaApp.models.Reserva;
 import com.feriaApp.repository.ReservaRepositorio;
+import com.feriaApp.Services.FeriaService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -47,7 +50,10 @@ public class ClienteController {
     private VendedorRepositorio vendedorRepositorio;
     @Autowired
     private ReservaRepositorio reservaRepositorio;
-    
+    @Autowired
+    private AsistenciaRepositorio asistenciaRepositorio;
+    @Autowired
+    private FeriaService feriaService;
 
 
     @GetMapping("/registro")
@@ -152,7 +158,7 @@ public class ClienteController {
                 .filter(f -> f.getFechaInicio() != null && !f.getFechaInicio().isBefore(hoy)) // incluye hoy
                 .sorted(Comparator.comparing(Feria::getFechaInicio))
                 .toList();
-
+        model.addAttribute("feriaService", feriaService); 
         model.addAttribute("ferias", feriasProximas);
         return "views/cliente/dashboard";
     }
@@ -235,5 +241,28 @@ public class ClienteController {
             productoRepositorio.save(producto);
 
             return "redirect:/cliente/reservas?exito";
+        }
+
+        
+
+        @GetMapping("/confirmar-asistencia/{feriaId}")
+        public String confirmarAsistencia(@PathVariable String feriaId, HttpSession session) {
+            String clienteId = (String) session.getAttribute("clienteId");
+            if (clienteId == null) return "redirect:/cliente/login";
+
+            Feria feria = feriaRepositorio.findById(feriaId).orElse(null);
+            if (feria == null || feria.getFechaFin().isBefore(LocalDate.now())) {
+                return "redirect:/cliente/dashboard"; // No se puede confirmar si ya terminó
+            }
+
+            Asistencia asistencia = asistenciaRepositorio.findByClienteIdAndFeriaId(clienteId, feriaId);
+            if (asistencia == null) {
+                asistencia = new Asistencia(clienteId, feriaId, true);
+            } else {
+                asistencia.setConfirmada(true);
+            }
+
+            asistenciaRepositorio.save(asistencia);
+            return "redirect:/cliente/dashboard";
         }
 }
