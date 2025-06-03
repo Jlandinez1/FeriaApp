@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Mis Productos</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <style>
 	body {
-	    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	    margin: 40px;
-	    background-color: #f9f9f9;
-	    color: #333;
-	}
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    color: #333;
+    text-align: center;
+    }
 
-	h2 {
+    header {
+        background-color: #ff5f6d;
+        background-image: linear-gradient(315deg, #ff5f6d 0%, #ffc371 74%);
+        color: white;
+        padding: 60px 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 3em;
+    }
+
+	h1 {
 	    color: #2c3e50;
 	    margin-bottom: 20px;
 	}
@@ -35,10 +50,12 @@
 	}
 
 	table {
-	    width: 100%;
+		margin: 40px;
+	    width: 90%;
 	    border-collapse: collapse;
 	    background-color: white;
 	    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+		border-radius: 10px;
 	}
 
 	th, td {
@@ -49,8 +66,8 @@
 	}
 
 	th {
-	    background-color: #f2f2f2;
-	    color: #333;
+	    background-color: #6a11cb;
+	    color: #fff;
 	}
 
 	img {
@@ -113,41 +130,48 @@
 </style>
 
 <body>
-<h2>📦 Mis Productos</h2>
-<table border="1">
-    <thead>
-        <tr>
-			<!--<th>Imagen</th>-->
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Descripción</th>
-            <th>Stock</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="producto : ${productos}">
-			<!--<td>
-                <img th:src="@{${producto.imagenUrl}}" alt="Imagen del producto" width="80">
+	<header><h1>📦 Mis Productos</h1></header>
+	<center>
+		<table border="1">
+			<thead>
+				<tr>
+					<!--<th>Imagen</th>-->
+					<th>Nombre</th>
+					<th>Precio</th>
+					<th>Descripción</th>
+					<th>Stock</th>
+					<th>Categoría</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="producto : ${productos}">
+					<!--<td>
+						<img th:src="@{${producto.imagenUrl}}" alt="Imagen del producto" width="80">
 
-            </td>-->
-            <td th:text="${producto.nombre}">Nombre</td>
-            <td th:text="'$' + ${producto.precio}">Precio</td>
-            <td th:text="${producto.descripcion}">Descripción</td>
-            <td th:text="${producto.stock}">Stock</td>
-            <td th:text="${producto.categoria}">Categoría</td>
-            <td class="actions">
-                <a th:href="@{/vendedor/productos/editar/{id}(id=${producto.id})}">Editar</a> |
-                <a th:href="@{'/vendedor/productos/eliminar/' + ${producto.id}}"
-                   onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+					</td>-->
+					<td th:text="${producto.nombre}">Nombre</td>
+					<td th:text="'$' + ${producto.precio}">Precio</td>
+					<td th:text="${producto.descripcion}">Descripción</td>
+					<td th:text="${producto.stock}">Stock</td>
+					<td th:text="${producto.categoria}">Categoría</td>
+					<td class="actions">
+						<a th:href="@{/vendedor/productos/editar/{id}(id=${producto.id})}" class="btn btn-warning">Editar</a> |
+						<a th:href="@{'/vendedor/productos/eliminar/' + ${producto.id}}"
+						onclick="return confirm('¿Eliminar producto?')"
+						class="btn btn-danger">Eliminar</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
 
-<a th:href="@{/vendedor/productos/nuevo}" class="btn"><button>Nuevo Producto</button></a>
+<a th:href="@{/vendedor/productos/nuevo}" class="btn-secondary"><button>Nuevo Producto</button></a>
 
-<a href="/vendedor/dashboard" class="btn-secondary"><button>Volver al Dashboard</button></a>
+<a href="/vendedor/dashboard" class="btn"><button>Volver al Dashboard</button></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </body>
 </html>

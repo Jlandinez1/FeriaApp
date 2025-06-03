@@ -78,7 +78,7 @@
 		<p>Hola vendedor, desde aqui puedes administrar tus productos.</p>
 	</header>
 
-    <div class="dashboard-buttons">
+    <div class="dashboard-buttons"  th:if="${vendedor.estado == 'aprobado'}">
         <a th:href="@{/vendedor/productos}">
             <button>🛍️ Gestionar Productos</button>
         </a>
@@ -87,6 +87,14 @@
         </a>
         <!-- Puedes agregar más botones en el futuro -->
     </div>
+
+	<div class="dashboard-buttons" th:if="${vendedor.estado == 'pendiente'}">
+		<h3>Estamos aprobando tu solicitud lo más rapido posible, espera a que te aprobemos para poder usar esta pagina</h3>
+	</div>
+
+	<div class="dashboard-buttons" th:if="${vendedor.estado == 'rechazado'}">
+		<h3>Tu solicitud fue rechazada, no podras usar este panel</h3>
+	</div>
 	<a href="/" class="btn" onclick="return confirm('¿Desea Cerrar Sesion?')"><button>Cerrar sesion</button></a>
 
 	

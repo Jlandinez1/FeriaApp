@@ -6,70 +6,122 @@
 </head>
 <style>
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f9fc;
-        padding: 20px;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    color: #333;
+    text-align: center;
     }
+
+    header {
+        background-color: #ff5f6d;
+        background-image: linear-gradient(315deg, #ff5f6d 0%, #ffc371 74%);
+        color: white;
+        padding: 60px 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 3em;
+    }
+
     h2 {
         color: #333;
     }
     table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-    th, td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-    th {
-        background-color: #6a11cb;
-        color: white;
-    }
+        margin-top: 2%;
+	    width: 90%;
+	    border-collapse: collapse;
+	    background-color: white;
+	    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+	}
+
+	th, td {
+	    text-align: left;
+	    padding: 12px 15px;
+	    border-bottom: 1px solid #ddd;
+	    vertical-align: middle;
+	}
+
+	th {
+	    background-color: #6a11cb;
+	    color: #fff;
+	}
+
     tr:hover {
         background-color: #f1f1f1;
     }
-    a.button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #2575fc;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        margin-top: 20px;
-    }
-    a.button:hover {
-        background-color: #1c5fac;
-    }
+
+    .btn button{
+			padding: 15px 30px;
+		    font-size: 1.1em;
+		    color: white;
+		    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+		    border: none;
+		    border-radius: 10px;
+		    cursor: pointer;
+		    transition: transform 0.2s, box-shadow 0.2s;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+		}
+
+		.btn button{
+					padding: 15px 30px;
+				    font-size: 1.1em;
+				    color: white;
+				    background: linear-gradient(315deg, rgb(255, 0, 128) 0%, rgb(128, 0, 255) 74%);
+				    border: none;
+				    border-radius: 10px;
+				    cursor: pointer;
+				    transition: transform 0.2s, box-shadow 0.2s;
+				    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+					margin-top: 2%;
+					margin-bottom: 2%;
+		}
+
+		.btn-secondary button{
+			padding: 15px 30px;
+			font-size: 1.1em;
+			color: white;
+			background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: transform 0.2s, box-shadow 0.2s;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			margin-top: 2%;
+			margin-bottom: 2%;
+		}
 </style>
 <body>
+<header>
+    <h2>📊 Reporte de Asistencias a Ferias</h2>
+</header>
 
-<h2>📊 Reporte de Asistencias a Ferias</h2>
-
-<table>
-    <thead>
-        <tr>
-            <th>Feria</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Ubicación</th>
-            <th>Total Asistentes</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="fila : ${reporte}">
-            <td th:text="${fila.nombre}"></td>
-            <td th:text="${#temporals.format(fila.fechaInicio, 'dd/MM/yyyy')}"></td>
-            <td th:text="${#temporals.format(fila.fechaFin, 'dd/MM/yyyy')}"></td>
-            <td th:text="${fila.ubicacion}"></td>
-            <td th:text="${fila.totalAsistentes}"></td>
-        </tr>
-    </tbody>
-</table>
-
+<center>
+    <table>
+        <thead>
+            <tr>
+                <th>Feria</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Ubicación</th>
+                <th>Total Asistentes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="fila : ${reporte}">
+                <td th:text="${fila.nombre}"></td>
+                <td th:text="${#temporals.format(fila.fechaInicio, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(fila.fechaFin, 'dd/MM/yyyy')}"></td>
+                <td th:text="${fila.ubicacion}"></td>
+                <td th:text="${fila.totalAsistentes}"></td>
+            </tr>
+        </tbody>
+    </table>
+</center>
 <br><br>
-<a href="/organizador/dashboard" class="button">Volver al Dashboard</a>
+<a href="/organizador/dashboard" class="btn"><button>Volver al Dashboard</button></a>
 
 </body>
 </html>

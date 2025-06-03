@@ -91,7 +91,8 @@
                 <td th:text="${vendedor.estado}"></td>
                 <td>
                     <a th:href="@{'/organizador/vendedores/aprobar/' + ${vendedor.id}}" class="btn aprobar"
-                       th:if="${vendedor.estado == 'pendiente'}">Aprobar</a>
+                       th:if="${vendedor.estado == 'pendiente'}">Aprobar</a> 
+                       <a th:if="${vendedor.estado == 'pendiente'}"> | </a>
                     <a th:href="@{'/organizador/vendedores/rechazar/' + ${vendedor.id}}" class="btn rechazar"
                        th:if="${vendedor.estado == 'pendiente'}">Rechazar</a>
                 </td>
