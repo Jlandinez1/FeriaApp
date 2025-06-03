@@ -1,7 +1,5 @@
 package com.feriaApp.Services;
 
-import com.feriaApp.models.Asistencia;
-import com.feriaApp.models.Feria;
 import com.feriaApp.models.FeriaConAsistentesDTO;
 import com.feriaApp.repository.AsistenciaRepositorio;
 import com.feriaApp.repository.FeriaRepositorio;

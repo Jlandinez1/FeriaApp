@@ -6,8 +6,6 @@ import com.feriaApp.models.Vendedor;
 import com.feriaApp.repository.VendedorRepositorio;
 
 import java.util.List;
-import java.util.Comparator;
-import java.util.stream.Collectors;
 import java.util.Optional;
 
 

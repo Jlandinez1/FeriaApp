@@ -1,6 +1,5 @@
 package com.feriaApp.repository;
 
-import com.feriaApp.models.Organizador;
 import com.feriaApp.models.Stand;
 
 import java.util.List;
